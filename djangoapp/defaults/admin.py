@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import blog
+from .models import blog,contact
 
 class BlogAdmin(admin.ModelAdmin):
 	search_fields = ['title','tag']
@@ -12,3 +12,5 @@ class BlogAdmin(admin.ModelAdmin):
 	#prepopulated_fields = {"slug": ['tag']}
 # Register your models here.
 admin.site.register(blog, BlogAdmin)
+
+admin.site.register(contact)
