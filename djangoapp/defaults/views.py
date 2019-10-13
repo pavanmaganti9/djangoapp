@@ -8,6 +8,9 @@ from .forms import SignUpForm,ContactForm
 from django.core.signals import request_finished
 from django.dispatch import receiver
 
+from django.db.models import Q
+from .models import blog
+
 # Create your views here.
 def home(request):
 	return render(request, 'home.html', {'title': 'Site'})
@@ -38,3 +41,16 @@ def contact(request):
 @receiver(request_finished)
 def post_contact_receiver(sender, **kwargs):
 	print("Someone contacted from views!")
+	
+def search(request):
+	if request.method == 'POST':
+		srch = request.POST['srh']
+		print(srch)
+		if srch:
+			match = blog.objects.filter(Q(title__icontains=srch)|Q(tag__icontains=srch))
+			#title__istartswith, title__iendswith, title__iexact, title__exact
+			if match:
+				return render(request, 'search.html', {'sr':match})
+			else:
+				messages.error(request, 'No result found!')
+	return render(request, 'search.html', {'title':'Search'})

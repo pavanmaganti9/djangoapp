@@ -1,0 +1,44 @@
+{% extends 'header.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Search</h2>
+<div class="col-lg-12">
+	{% if messages %}
+            <div class="alert alert-danger alert-dismissible">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+  <form method="post" action="/search/">
+    {% csrf_token %}
+    <div class="form-group">
+		<div class="col-md-5">
+			<input type="text" name="srh" class="form-control">
+		</div>	<br>
+		<label class="col-md-2">
+    <button type="submit" class="btn btn-primary">Search</button>
+	</label>
+	</div>
+  </form> <br><br>
+  
+	<div>
+		{% if sr %}
+			{% for k in sr %}
+				<table width="300px">
+				<tr>
+				<td>Title</td>
+				<td>{{ k.title }}</td>
+				<tr>
+				<tr>
+				<td>Tag</td>
+				<td>{{ k.tag }}</td>
+				<tr>
+				</table>
+				<hr>
+			{% endfor %}
+		{% endif %}
+	</div>
+  
+  </div>
+{% endblock %}

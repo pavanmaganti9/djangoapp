@@ -23,6 +23,7 @@ urlpatterns = [
 	path('', d_views.home, name='home'),
 	url(r'^signup/$', d_views.signup, name='signup'),
 	url(r'^contact/$', d_views.contact, name='contact'),
+	url(r'^search/$', d_views.search, name='search'),
     path('admin/', admin.site.urls),
 	#url(r'^$', defalut_view.home, name='home'),
 ]
