@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 
+from django.db.models.signals import post_save, pre_save, post_delete
+
 
 COLOR_CHOICES = [
     ('blue', 'Blue'),
@@ -31,3 +33,23 @@ class contact(models.Model):
 	
 	def __str__(self):
 		return format(self.name)
+		
+#Receiver of the signal
+# sender is the model that we send signal to, instance is the model instance
+def sig_post_contact(sender, instance, **kwargs):
+	print("Someone contacted!")
+	
+def sig_pre_contact(sender, instance, **kwargs):
+	print("Before executing save contacted!")
+	
+def sig_after_delete_contact(sender, instance, **kwargs):
+	print("Deleted contacted!")
+
+# link the receiver to the actual signal
+# connect is the method that you pass to attach the receiver
+# connect syntax -- connect(self, receiver, sender=None, weak=True, dispatch_uid=None)
+pre_save.connect(sig_pre_contact, sender=contact)
+
+post_save.connect(sig_post_contact, sender=contact)
+
+post_delete.connect(sig_after_delete_contact, sender=contact)

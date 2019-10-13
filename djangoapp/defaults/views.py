@@ -5,6 +5,9 @@ from django.contrib import messages
 
 from .forms import SignUpForm,ContactForm
 
+from django.core.signals import request_finished
+from django.dispatch import receiver
+
 # Create your views here.
 def home(request):
 	return render(request, 'home.html', {'title': 'Site'})
@@ -31,3 +34,7 @@ def contact(request):
 	else:
 		form = ContactForm()
 	return render(request, 'contact.html', {'title': 'Contact','form': form})
+
+@receiver(request_finished)
+def post_contact_receiver(sender, **kwargs):
+	print("Someone contacted from views!")
