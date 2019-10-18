@@ -10,6 +10,12 @@ COLOR_CHOICES = [
     ('black', 'Black'),
 ]
 
+FEATURED = [
+	(0, 'No'),
+	(1, 'Everwhere'),
+	(2, 'Category-only')
+]
+
 
 # Create your models here.
 class blog(models.Model):
@@ -20,6 +26,7 @@ class blog(models.Model):
 	color = models.CharField(max_length=6, choices=COLOR_CHOICES)
 	#gender = forms.ChoiceField(choices=GENDER_CHOICES,widget=forms.RadioSelect())
 	date = models.DateTimeField(default=datetime.now(), blank=True)
+	featured = models.IntegerField(choices = FEATURED, default=0)
 	
 	def __str__(self):
 		return format(self.title)
