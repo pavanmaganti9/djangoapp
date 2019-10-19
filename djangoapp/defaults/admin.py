@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import blog,contact
+from .models import blog,contact, post
 
 class BlogAdmin(admin.ModelAdmin):
 	search_fields = ['title','tag']
@@ -34,3 +34,5 @@ class BlogAdmin(admin.ModelAdmin):
 admin.site.register(blog, BlogAdmin)
 
 admin.site.register(contact)
+
+admin.site.register(post)

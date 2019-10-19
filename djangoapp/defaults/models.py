@@ -60,3 +60,10 @@ pre_save.connect(sig_pre_contact, sender=contact)
 post_save.connect(sig_post_contact, sender=contact)
 
 post_delete.connect(sig_after_delete_contact, sender=contact)
+
+class post(models.Model):
+	title = models.CharField(max_length=50)
+	desc = models.TextField(blank=True)
+	
+	def __str__(self):
+		return format(self.title)

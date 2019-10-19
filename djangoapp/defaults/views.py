@@ -3,13 +3,13 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib import messages
 
-from .forms import SignUpForm,ContactForm
+from .forms import SignUpForm, ContactForm, PostForm
 
 from django.core.signals import request_finished
 from django.dispatch import receiver
 
 from django.db.models import Q
-from .models import blog
+from .models import blog, post
 
 # Create your views here.
 def home(request):
@@ -54,3 +54,37 @@ def search(request):
 			else:
 				messages.error(request, 'No result found!')
 	return render(request, 'search.html', {'title':'Search'})
+	
+def posts(request):
+	if request.method == "POST":  
+		form = PostForm(data = request.POST)
+		if form.is_valid():  
+			try:
+				post = form.save()
+				messages.success(request, 'Form Submitted Successfully!')
+				return redirect('posts')
+			except:
+				pass
+	else:  
+		form = PostForm()
+	return render(request, 'posts.html', {'title' : 'Add Posts','form':form})
+	
+def allposts(request):
+	posts = post.objects.all()
+	return render(request, 'allposts.html', {'title' : 'All Posts','allposts':posts})
+	
+def postupdate(request, id):
+	Posts = post.objects.get(id=id)
+	form = PostForm(request.POST or None, instance=Posts)
+	if form.is_valid():
+		#instance = form.save(commit=False)
+		form.save()
+		return redirect('allposts')
+	return render(request, 'posts.html', {'title' : 'Edit Posts','form':form,'Posts':Posts})
+	
+def postdelete(request, id):
+	Post = post.objects.get(id=id)
+	if Post:
+		Post.delete()
+		return redirect('allposts')
+	return render(request, 'posts.html')

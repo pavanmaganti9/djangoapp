@@ -25,6 +25,10 @@ urlpatterns = [
 	url(r'^signup/$', d_views.signup, name='signup'),
 	url(r'^contact/$', d_views.contact, name='contact'),
 	url(r'^search/$', d_views.search, name='search'),
+	url(r'^posts/$', d_views.posts, name='posts'),
+	url(r'^allposts/$', d_views.allposts, name='allposts'),
+	url(r'^postupdate/(?P<id>\d+)/$', d_views.postupdate, name='postupdate'),
+	url(r'^postdelete/(?P<id>\d+)/$', d_views.postdelete, name='postdelete'),
     path('admin/', admin.site.urls),
 	#url(r'^$', defalut_view.home, name='home'),
 ]

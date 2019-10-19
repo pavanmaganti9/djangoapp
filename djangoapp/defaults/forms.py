@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import contact
+from .models import contact, post
 
 
 class SignUpForm(UserCreationForm):
@@ -21,3 +21,8 @@ class ContactForm(forms.ModelForm):
 	class Meta:
 		model = contact
 		fields = ('name', 'email', 'address')
+		
+class PostForm(forms.ModelForm):  
+    class Meta:  
+        model = post  
+        fields = "__all__"  
